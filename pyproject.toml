@@ -1,6 +1,6 @@
 [project]
 name = "personal_ai_agent"
-version = "0.1.1"
+version = "1.0.0"
 description = "An AI-powered agent that retrieves and answers questions based on personal profile data from the integrated knowledge base."
 readme = "README.md"
 requires-python = ">=3.10"

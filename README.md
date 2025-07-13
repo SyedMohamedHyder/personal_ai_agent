@@ -60,7 +60,7 @@ OPENAI_API_KEY=your-openai-key-here
 ### 3. Launch the app
 
 ```bash
-uv run python main.py
+uv run app/app.py
 ```
 
 This will:
