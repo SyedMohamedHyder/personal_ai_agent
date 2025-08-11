@@ -4,3 +4,4 @@ KNOWLEDGE_BASE = "knowledge-base/linkedin"
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 TOP_K = 25
+USER_NAME = "Syed Mohamed Hyder"  # Replace with the actual user's name

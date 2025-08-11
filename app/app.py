@@ -1,4 +1,4 @@
-from config import MODEL, KNOWLEDGE_BASE, VECTOR_DB
+from config import MODEL, KNOWLEDGE_BASE, VECTOR_DB, USER_NAME
 from vectorstore.manager import inspect_vectorstore
 from ui.chat_interface import launch_chat_interface
 from core.pipeline import setup_environment, load_and_vectorize
@@ -9,7 +9,9 @@ from rag.conversation_chain import create_conversational_chain
 # ───────────────────────────────────────────────────────────────────────────────
 
 setup_environment()
-documents, chunks, vectorstore, collection = load_and_vectorize(KNOWLEDGE_BASE, VECTOR_DB)
+documents, chunks, vectorstore, collection = load_and_vectorize(
+    KNOWLEDGE_BASE, VECTOR_DB
+)
 
 print(f"Total documents: {len(documents)}")
 print(f"Total chunks: {len(chunks)}")
@@ -21,14 +23,26 @@ inspect_vectorstore(collection)
 # CONVERSATION CHAIN SETUP
 # ───────────────────────────────────────────────────────────────────────────────
 
-conversation_chain = create_conversational_chain(vectorstore, model_name=MODEL)
+system_prompt = (
+    f"You are acting as {USER_NAME}. You are answering questions on {USER_NAME}'s website, "
+    f"particularly questions related to {USER_NAME}'s career, background, skills and experience. "
+    f"Your responsibility is to represent {USER_NAME} for interactions on the website as faithfully as possible. "
+    f"You are given a summary of {USER_NAME}'s background and LinkedIn profile which you can use to answer questions. "
+    f"Be professional and engaging, as if talking to a potential client or future employer who came across the website. "
+    f"With this context, please chat with the user, always staying in character as {USER_NAME}."
+)
+
+conversation_chain = create_conversational_chain(
+    vectorstore, model_name=MODEL, system_prompt=system_prompt
+)
+
 
 def chat(question, _):
     """
     Handle user questions by invoking the conversation chain.
 
     Args:
-        question (str): The user’s question.
+        question (str): The user's question.
         _ (list): Unused chat history placeholder.
 
     Returns:
@@ -36,6 +50,7 @@ def chat(question, _):
     """
     result = conversation_chain.invoke({"question": question})
     return result["answer"]
+
 
 # ───────────────────────────────────────────────────────────────────────────────
 # LAUNCH CHAT UI
