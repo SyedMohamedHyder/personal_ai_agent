@@ -20,15 +20,16 @@ def create_vectorstore(chunks, persist_directory, overwrite=True):
     embeddings = OpenAIEmbeddings()
 
     if overwrite and os.path.exists(persist_directory):
-        Chroma(persist_directory=persist_directory, embedding_function=embeddings).delete_collection()
+        Chroma(
+            persist_directory=persist_directory, embedding_function=embeddings
+        ).delete_collection()
 
     vectorstore = Chroma.from_documents(
-        documents=chunks,
-        embedding=embeddings,
-        persist_directory=persist_directory
+        documents=chunks, embedding=embeddings, persist_directory=persist_directory
     )
 
     return vectorstore
+
 
 def get_collection(vectorstore):
     """
@@ -41,6 +42,7 @@ def get_collection(vectorstore):
         Collection: The internal collection object.
     """
     return vectorstore._collection
+
 
 def inspect_vectorstore(collection):
     """
@@ -58,6 +60,8 @@ def inspect_vectorstore(collection):
 
     if len(embeddings) > 0:
         dimensions = len(embeddings[0])
-        print(f"There are {count:,} vectors with {dimensions:,} dimensions in the vector store")
+        print(
+            f"There are {count:,} vectors with {dimensions:,} dimensions in the vector store"
+        )
     else:
         print("No embeddings found in the vector store.")
