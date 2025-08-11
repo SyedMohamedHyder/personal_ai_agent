@@ -1,5 +1,6 @@
 import gradio as gr
 
+
 def launch_chat_interface(chat_func):
     """
     Launch the Gradio chat interface with dark theme enabled.
