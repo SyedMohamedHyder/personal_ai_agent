@@ -1,9 +1,9 @@
 import os
-import numpy as np
 from dotenv import load_dotenv
 
 from vectorstore.manager import create_vectorstore, get_collection
 from loaders.document import load_documents_from_knowledge_base, split_into_chunks
+
 
 def setup_environment():
     """
@@ -13,7 +13,10 @@ def setup_environment():
     falling back to a default placeholder if not explicitly set.
     """
     load_dotenv(override=True)
-    os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY', 'your-key-if-not-using-env')
+    os.environ["OPENAI_API_KEY"] = os.getenv(
+        "OPENAI_API_KEY", "your-key-if-not-using-env"
+    )
+
 
 def load_and_vectorize(knowledge_base, vector_db):
     """
