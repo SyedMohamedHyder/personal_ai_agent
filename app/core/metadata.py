@@ -1,24 +1,36 @@
 import numpy as np
 
+# Color mapping for different document types in the LinkedIn knowledge base
+# Each category gets a distinct color for visualization purposes
 COLOR_MAP = {
-    "profile": "blue",
-    "career": "green",
-    "education": "#003366",
-    "skills": "yellow",
-    "certifications": "purple",
-    "test_scores": "#3D005E",
-    "honors": "#8B8000",
-    "languages": "#2E0854",
-    "volunteering": "#145A32",
-    "projects": "orange",
-    "publications": "#660000",
-    "job_search": "#2F4F4F",
+    "profile": "#1e3a8a",
+    "experience": "#065f46",
+    "education": "#7c2d12",
+    "skills": "#ca8a04",
+    "certifications": "#7c3aed",
+    "projects": "#ea580c",
+    "publications": "#dc2626",
+    "networking": "#0d9488",
+    "communications": "#059669",
+    "preferences": "#6b7280",
 }
 
 
 def extract_metadata(collection):
     """
     Extract vectors, documents, doc_types, and color mappings from a Chroma collection.
+    
+    The doc_types correspond to the organized LinkedIn directory structure:
+    - profile: Basic profile information and summaries
+    - experience: Work history, positions, volunteering
+    - education: Educational background, honors, test scores
+    - skills: Technical skills, languages, competencies
+    - certifications: Professional certifications and credentials
+    - projects: Portfolio projects and work samples
+    - publications: Published articles and papers
+    - networking: Connections, company follows, invitations
+    - communications: Messages, coach interactions
+    - preferences: Account settings, preferences, saved alerts
 
     Args:
         collection: The Chroma vectorstore collection object.
