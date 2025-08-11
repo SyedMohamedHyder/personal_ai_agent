@@ -20,6 +20,7 @@ def add_metadata(doc, doc_type):
     doc.metadata["doc_type"] = doc_type
     return doc
 
+
 def load_folder_documents(folder):
     """
     Load all markdown documents from a given folder and tag them with metadata.
@@ -33,12 +34,15 @@ def load_folder_documents(folder):
     doc_type = os.path.basename(folder)
     loader = DirectoryLoader(
         folder,
-        glob="**/*.md",
+        glob="**/*",
         loader_cls=TextLoader,
-        loader_kwargs={'encoding': 'utf-8'}
+        loader_kwargs={"encoding": "utf-8"},
+        recursive=True,
+        show_progress=True,
     )
     folder_docs = loader.load()
     return [add_metadata(doc, doc_type) for doc in folder_docs]
+
 
 def load_documents(folders):
     """
@@ -55,6 +59,7 @@ def load_documents(folders):
         documents.extend(load_folder_documents(folder))
     return documents
 
+
 def load_documents_from_knowledge_base(knowledge_base: str):
     """
     Load all documents from the specified knowledge base directory.
@@ -70,6 +75,7 @@ def load_documents_from_knowledge_base(knowledge_base: str):
     """
     folders = glob.glob(f"{knowledge_base}/*")
     return load_documents(folders)
+
 
 def split_into_chunks(documents, chunk_size=1000, chunk_overlap=200):
     """
